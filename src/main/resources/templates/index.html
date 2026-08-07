@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>備品管理システム</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>備品管理システム</h1>
+    <p class="success-message"
+       th:if="${message}"
+       th:text="${message}">
+    </p>
+    <div class="top-area">
+      <div class="register-area">
+      　<form action="/save" method="post" th:object="${item}">
+         <p>備品名</p>
+         <input type="text" name="name" th:field="*{name}">
+          <p class="error"
+             th:if="${#fields.hasErrors('name')}"
+             th:errors="*{name}">
+          </p>
+
+         <p>カテゴリ</p>
+         <input type="text" name="category" th:field="*{category}">
+          <p class="error"
+             th:if="${#fields.hasErrors('category')}"
+             th:errors="*{category}">
+          </p>
+
+         <p>価格</p>
+         <input type="number" name="price" th:field="*{price}">
+          <p class="error"
+             th:if="${#fields.hasErrors('price')}"
+             th:errors="*{price}">
+          </p>
+
+         <p>在庫</p>
+         <input type="number" name="stock" th:field="*{stock}">
+          <p class="error"
+             th:if="${#fields.hasErrors('stock')}"
+             th:errors="*{stock}">
+          </p>
+         <button type="submit">登録</button>
+      　</form>
+      </div>
+      <div class="search-area">
+        <form action="/search" method="get">
+         <input type="text" name="keyword" placeholder="商品名を入力">
+         <button type="submit">検索</button>
+        </form>
+        <form action="/sort" method="get">
+          <label for="sort">並び替え:</label>
+          <select name="sort" id="sort">
+            <option value="low-stock">在庫が5個以下の商品</option>
+            <option value="price-asc">価格が安い順</option>
+            <option value="stock-desc">在庫が多い順</option>
+            <option value="name-asc">商品名順</option>
+          </select>
+          <button type="submit">並び替え</button>
+        </form>
+       <form action="/category" method="get">
+         <label for="category">カテゴリー指定:</label>
+         <select name="category" id="category">
+            <option
+                    th:each="category : ${categories}"
+                    th:value="${category}"
+                    th:text="${category}">
+            </option>
+         </select>
+        <button type="submit">検索</button>
+       </form>
+       <a href="/">全件表示</a>
+      </div>
+    </div>
+    <h2>備品一覧</h2>
+    <table>
+
+        <thead>
+        <tr>
+            <th>備品名</th>
+            <th>カテゴリ</th>
+            <th>価格</th>
+            <th>在庫</th>
+            <th>削除</th>
+            <th>編集</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each = "item : ${items}">
+            <td th:text="${item.name}">備品名</td>
+            <td th:text="${item.category}">カテゴリ</td>
+            <td th:text="${item.price}">価格</td>
+            <td th:text="${item.stock}">在庫</td>
+            <td>
+                <form action="/delete" method="post" onsubmit="return confirm('本当に削除しますか？');">
+
+                    <input type="hidden"
+                           name="id"
+                           th:value="${item.id}"
+                    >
+                    <button type="submit">削除</button>
+                </form>
+            </td>
+            <td>
+                <a th:href="@{/edit/{id}(id=${item.id})}">編集</a>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+</body>
+</html>
