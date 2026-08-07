@@ -42,3 +42,17 @@ Spring Bootを使用して作成した備品管理システムです。
 - Repositoryのメソッド名を利用した商品名検索・在庫検索を実装
 - Sortクラスを利用して価格順ソートを実装
 - 入力チェックとエラーメッセージ表示により、入力ミスを防止
+
+## 画面イメージ
+
+### メイン画面
+登録・検索・並び替え機能
+<img width="964" height="509" alt="main-page" src="https://github.com/user-attachments/assets/c512c6ec-60e8-4f6e-a525-990bb93f6886" />
+
+### 備品一覧画面
+登録した備品を一覧表示し、編集・削除を行えます。
+<img width="944" height="567" alt="item-list" src="https://github.com/user-attachments/assets/98804a82-b0bd-4aca-9c07-92d5fe0d7f9e" />
+
+
+
+
